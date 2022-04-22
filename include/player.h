@@ -47,6 +47,16 @@ class player{
             }
             return total;
         };
+
+        bool checkWin(){
+            for (int i = 0; i< 12; i++){
+                if (!table[i].getFacing()){
+                    return false;
+                }
+            }
+            return true;
+        };
+
         //this function is used to print the player's hand.
         //it will only work with the << operator, for example using std::cout << p1 << std::endl;
         //as such, printf("%s", p1) will not work.

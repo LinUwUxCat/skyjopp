@@ -57,11 +57,15 @@ class game{
             }
             exit(EXIT_FAILURE);
         };
-
+        
         void start(){
-            bool notDone = true;
-            while (notDone){
+            int lastPlayer = -1;
+            while (1){ //i hate doing this but oh well
                 for (int i=0; i<numPlayers; i++){
+                    if (lastPlayer == i){
+                        printf("Finished!\n");
+                        return;
+                    }
                     printf("It's %s's turn!", players[i]->getName());
                     printf("What do you want to do?\n0:Take a card from the stack\n1:Take the discarded card\n>> ");
                     int action = 0;
@@ -83,7 +87,9 @@ class game{
                         if (action == 0){ //this code sucks, it's repetitive
                             int cnum = -1;
                             while (cnum < 0 || cnum > 11){
-                                printf("With what card do you want to swap the %d you just took?\n>> ", topCard()->getValue());
+                                printf("With what card do you want to swap the ");
+                                printf(topCard()->getColor());
+                                printf("%d\033[0m you just took?\n>> ", topCard()->getValue());
                                 scanf("%d", &cnum);
                                 if (cnum < 0 || cnum > 11){ printf("Invalid Number! Please retry.\n>> "); }
                             }
@@ -98,13 +104,18 @@ class game{
                             while (cnum < 0 || cnum > 11){
                                 printf("You discarded the %d. Which card do you want to flip now?\n>> ", topCard()->getValue());
                                 scanf("%d", &cnum);
-                                if (cnum < 0 || cnum > 11){ printf("Invalid Number! Please retry.\n>> "); }
+                                if (cnum < 0 || cnum > 11){ printf("Invalid Number! Please retry.\n>> "); } else if (players[i]->getCard(cnum)->getFacing()) { printf("You can't flip a card that's already flipped!\n"); cnum = -1;}
                             }
                             players[i]->getCard(cnum)->flip();
+                            topCard()->setValue(-3);
                         }
                     }
                     printf("%s's turn ended! Here is the table : ", players[i]->getName());
                     std::cout << *this << std::endl ;
+                    if (players[i]->checkWin()){
+                        lastPlayer = i;
+                        printf("%s has started the last round!\n", players[i]->getName());
+                    }
                 }
             }
         }
