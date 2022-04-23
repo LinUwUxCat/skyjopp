@@ -32,8 +32,31 @@ void createSet(card* set[150]){
 }
 
 int main(){ //half of this will disappear lol
+
+    //set creation
     card* set[150];
-    createSet(set);
+    createSet(set); //This has to be done before the players are created!!
+
+    int numPlayers; //actually let's create players here
+    printf("Enter the number of players: ");
+    scanf("%d", &numPlayers);
+    if (numPlayers > 8){ //The official rules say 2 to 8 players.
+        printf("Too many players.\n");
+        return 1;
+    } else if(numPlayers < 2){
+        printf("Too few players.\n");
+       return 1;
+    }
+    player *players[numPlayers]; 
+    for (int i = 0; i < numPlayers; i++){
+        printf("Enter the name of player %d: ", i+1);
+        char name[20]; //maybe this is too short?
+        scanf("%s", name);
+        players[i] = new player(name, set);
+    //    std::cout << i << players[i]->getName() << std::endl;
+    }
+    
+    
     /*for (int i = 0; i < 150; i++){
         std::cout << set[i]->getValue() << " ";
     }
@@ -47,7 +70,7 @@ int main(){ //half of this will disappear lol
     p1.getCard(card1)->flip();
     p1.getCard(card2)->flip();
     std::cout << p1 << std::endl;*/
-    game g = game(set);
+    game g = game(set, numPlayers, players);
     g.start();
 
     return 0;

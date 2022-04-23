@@ -2,31 +2,21 @@
 class game{
     protected:
         player *players[8]; //The official rules say 2 to 8 players.
-        int numPlayers;
         card* set[150];
+        int numPlayers;
         card discard = card(-3);
 
     public:
-        game(card* set[150]){
+        game(card* set[150], int numPlayers,  player* players[8]){
             for (int i = 0; i < 150; i++){
                 this->set[i] = set[i];
             }
-            printf("Enter the number of players: ");
-            scanf("%d", &numPlayers);
-            if (numPlayers > 8){
-                printf("Too many players.\n");
-                exit(1);
-            } else if(numPlayers < 2){
-                printf("Too few players.\n");
-                exit(1);
+            this->numPlayers = numPlayers;
+            for (int i = 0; i < this->numPlayers; i++){
+                this->players[i] = players[i];
             }
-            //player creation
-            for (int i = 0; i < numPlayers; i++){
-                printf("Enter the name of player %d: ", i+1);
-                char name[20]; //maybe this is too short?
-                scanf("%s", name);
-                players[i] = new player(name, set);
-            }
+            
+            //std::cout << numPlayers << std::endl;
             //card setup
             discard.setValue(topCard()->getValue()); //set the discard card to the top card.
             discard.flip();
@@ -39,7 +29,8 @@ class game{
 
             //choose 2 initial cards to flip
             for (int i = 0; i < numPlayers; i++){
-                printf("Choose 2 cards to flip:\n>> ");
+                //std::cout << i << players[i]->getName() << std::endl;
+                printf("%s, Choose 2 cards to flip:\n>> ", players[i]->getName());
                 int card1, card2;
                 scanf("%d %d", &card1, &card2);
                 players[i]->getCard(card1)->flip();
