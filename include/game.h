@@ -98,9 +98,11 @@ class game{
                                 if (cnum < 0 || cnum > 11){ printf("Invalid Number! Please retry.\n>> "); } else if (players[i]->getCard(cnum)->getFacing()) { printf("You can't flip a card that's already flipped!\n"); cnum = -1;}
                             }
                             players[i]->getCard(cnum)->flip();
+                            discard.setValue(topCard()->getValue());
                             topCard()->setValue(-3);
                         }
                     }
+                    players[i]->checkColumn();
                     printf("%s's turn ended! Here is the table : ", players[i]->getName());
                     std::cout << *this << std::endl ;
                     if (players[i]->checkWin()){

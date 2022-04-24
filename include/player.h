@@ -57,6 +57,17 @@ class player{
             return true;
         };
 
+        void checkColumn(){
+            for (int i = 0; i < 4; i++){
+                if (table[i].getValue() == table[i+4].getValue() && table[i+4].getValue() == table[i+8].getValue()){
+                    table[i].disable();
+                    table[i+4].disable();
+                    table[i+8].disable();
+                }
+            }
+            return;
+        }
+
         //this function is used to print the player's hand.
         //it will only work with the << operator, for example using std::cout << p1 << std::endl;
         //as such, printf("%s", p1) will not work.
