@@ -51,10 +51,16 @@ class game{
         
         void start(){
             int lastPlayer = -1;
+            bool doublePoints = false;
+
             while (1){ //i hate doing this but oh well
                 for (int i=0; i<numPlayers; i++){
                     if (lastPlayer == i){
                         printf("Finished!\n");
+                        if (doublePoints){
+                            players[lastPlayer]->addPoints(players[lastPlayer]->getPoints()*2);
+                            printf("%s had more points than others, his points get doubled!\n", players[lastPlayer]->getName());
+                        } //points handling must be done outside this class, or outside this for loop, which requires making another xd
                         return;
                     }
                     printf("It's %s's turn!", players[i]->getName());
@@ -105,9 +111,15 @@ class game{
                     players[i]->checkColumn();
                     printf("%s's turn ended! Here is the table : ", players[i]->getName());
                     std::cout << *this << std::endl ;
-                    if (players[i]->checkWin()){
+                    if (players[i]->checkWin() && lastPlayer == -1){
                         lastPlayer = i;
                         printf("%s has started the last round!\n", players[i]->getName());
+                    }
+                    if (lastPlayer != -1 && i != lastPlayer){
+                        if (players[lastPlayer]->getTotal() > players[i]->getTotal() && !doublePoints){
+                            doublePoints = true;
+                        }
+                        players[i]->addPoints(players[i]->getTotal());
                     }
                 }
             }

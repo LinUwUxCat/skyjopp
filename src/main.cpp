@@ -72,6 +72,9 @@ int main(){ //half of this will disappear lol
     std::cout << p1 << std::endl;*/
     game g = game(set, numPlayers, players);
     g.start();
+    for (int i = 0; i < numPlayers; i++){
+        std::cout << players[i]->getName() << "has" << players[i]->getPoints() << "points." << std::endl;
+    }
 
     return 0;
 

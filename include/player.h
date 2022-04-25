@@ -7,7 +7,7 @@ class player{
     protected:
         char name[20];
         card table[12] = {card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3)};
-        
+        int points = 0;
     
     public:
         player(char* name, card* set[150]){ //do i really need to pass the set?
@@ -43,7 +43,9 @@ class player{
         int getTotal(){
             int total = 0;
             for (int i = 0; i < 12; i++){
-                total += table[i].getValue();
+                if (table[i].getFacing()){
+                    total += table[i].getValue();
+                }
             }
             return total;
         };
@@ -57,6 +59,16 @@ class player{
             return true;
         };
 
+        int getPoints(){
+            return points;
+        };
+
+        void addPoints(int points){
+            this->points += points;
+        };
+
+
+        
         void checkColumn(){
             for (int i = 0; i < 4; i++){
                 if (table[i].getValue() == table[i+4].getValue() && table[i+4].getValue() == table[i+8].getValue()){
