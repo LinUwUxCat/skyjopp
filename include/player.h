@@ -71,7 +71,7 @@ class player{
         
         void checkColumn(){
             for (int i = 0; i < 4; i++){
-                if (table[i].getValue() == table[i+4].getValue() && table[i+4].getValue() == table[i+8].getValue()){
+                if (table[i].getValue() == table[i+4].getValue() && table[i+4].getValue() == table[i+8].getValue() && table[i].getFacing() && table[i+4].getFacing() && table[i+8].getFacing()){
                     table[i].disable();
                     table[i+4].disable();
                     table[i+8].disable();
