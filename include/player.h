@@ -4,7 +4,7 @@
 #include "utils.h"
 
 class player{
-    protected:
+    private:
         char name[20];
         card table[12] = {card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3)};
         int points = 0;

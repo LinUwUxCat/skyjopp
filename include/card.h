@@ -1,5 +1,5 @@
 class card{
-    protected:
+    private:
         bool enabled; //does the card count towards the player's score. This only works if the card is in a player's hand.
         int value; //-2 to 12
         bool facing; //true if up, false if down. when in stack, false.

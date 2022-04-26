@@ -1,6 +1,6 @@
 #include "player.h"
 class game{
-    protected:
+    private:
         player *players[8]; //The official rules say 2 to 8 players.
         card* set[150];
         int numPlayers;
