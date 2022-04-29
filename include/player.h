@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "card.h"
+#include "cardSet.h"
 #include "utils.h"
 
 class player{
@@ -10,13 +10,13 @@ class player{
         int points = 0;
     
     public:
-        player(char* name, card* set[150]){ //do i really need to pass the set?
+        player(char* name, cardSet set){ //do i really need to pass the set? //this will be moved later
             strcpy(this->name, name);
             int offset = 0;
             for (int i = 0; i < 12; i++){
-                if (set[i+offset]->getValue() != -3){
-                    table[i].setValue(set[i+offset]->getValue());
-                    set[i+offset]->setValue(-3);
+                if (set.getCard(i+offset)->getValue() != -3){
+                    table[i].setValue(set.getCard(i+offset)->getValue());
+                    set.getCard(i+offset)->setValue(-3);
                 } else {
                     i--;
                     offset++;
