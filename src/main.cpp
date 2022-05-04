@@ -37,11 +37,12 @@ int main(){ //half of this will disappear lol
     p1.getCard(card2)->flip();
     std::cout << p1 << std::endl;*/
     game g = game(numPlayers, players, mySet);
-    g.start();
-    for (int i = 0; i < numPlayers; i++){
-        std::cout << players[i]->getName() << "has" << players[i]->getPoints() << "points." << std::endl;
+    while ( noPlayersAboveMax(players, numPlayers, 100) ){
+        g.start();
+        for (int i = 0; i < numPlayers; i++){
+            std::cout << players[i]->getName() << "has" << players[i]->getPoints() << "points." << std::endl;
+        }
     }
-
     return 0;
 
 }

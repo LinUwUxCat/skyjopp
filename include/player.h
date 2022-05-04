@@ -40,6 +40,12 @@ class player{
             return table;
         };    
 
+        void resetTable(){
+            for (int i = 0; i < 12; i++){
+                table[i].setValue(-3);
+            }
+        }
+
         int getTotal(){
             int total = 0;
             for (int i = 0; i < 12; i++){
