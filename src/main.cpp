@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include "game.h" //includes the game, which also includes player which also includes card and spacefill.
 
 int main(){ //half of this will disappear lol
@@ -13,7 +14,7 @@ int main(){ //half of this will disappear lol
         printf("Too few players.\n");
        return 1;
     }
-    player *players[numPlayers]; 
+    std::vector<player*> players;
     for (int i = 0; i < numPlayers; i++){
         printf("Enter the name of player %d: ", i+1);
         char name[20]; //maybe this is too short?
@@ -23,8 +24,8 @@ int main(){ //half of this will disappear lol
     }
     
 
-    game g = game(numPlayers, players, mySet);
-    while ( noPlayersAboveMax(players, numPlayers, 100) ){ //the official rules say that the game ends when 1 player has 100 points.
+    game g = game(players, mySet);
+    while ( noPlayersAboveMax(players, 100) ){ //the official rules say that the game ends when 1 player has 100 points.
         g.start();
         for (int i = 0; i < numPlayers; i++){
             std::cout << players[i]->getName() << "has" << players[i]->getPoints() << "points." << std::endl;

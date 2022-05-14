@@ -1,24 +1,21 @@
 #include "player.h"
+#include <vector>
 
 class game{
     private:
-        player *players[8]; //The official rules say 2 to 8 players.
+        std::vector<player*> players; //The official rules say 2 to 8 players.
+        //it's better to use a vector here, because the number of players can change.
         cardSet set;
         int numPlayers;
         //card discard = card(-3); //discard is now in the cardSet class
 
     public:
-        game(int numPlayers,  player* players[8], cardSet mySet){
+        game(std::vector<player*> players, cardSet mySet){
             for (int i = 0; i < 150; i++){
                 this->set.getCard(i)->setValue(mySet.getCard(i)->getValue());
             }
-            this->numPlayers = numPlayers;
-            //print length of players
-            for (int i = 0; i < this->numPlayers; i++){
-                this->players[i] = players[i];
-            }
-            
-            //std::cout << numPlayers << std::endl;
+            this->numPlayers = players.size();
+            this->players = players;
             //card setup
             this->set.getDiscard()->setValue(this->set.topCard()->getValue()); //set the discard card to the top card.
             this->set.getDiscard()->flip();

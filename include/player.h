@@ -6,7 +6,7 @@
 class player{
     private:
         char name[20];
-        card table[12] = {card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3)};
+        card table[12] = {card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3),card(-3)}; //so since the size will never change, there's no need for a vector.
         int points = 0;
     
     public:
@@ -110,8 +110,8 @@ class player{
         
 };
 
-bool noPlayersAboveMax(player* players[8], int numPlayers, int maxPoints){
-    for (int i = 0; i < numPlayers; i++){
+bool noPlayersAboveMax(std::vector<player*> players, int maxPoints){
+    for (int i = 0; i < players.size(); i++){
         if (players[i]->getPoints() > maxPoints){
             return false;
         }
