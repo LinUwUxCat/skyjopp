@@ -13,6 +13,7 @@ class game{
                 this->set.getCard(i)->setValue(mySet.getCard(i)->getValue());
             }
             this->numPlayers = numPlayers;
+            //print length of players
             for (int i = 0; i < this->numPlayers; i++){
                 this->players[i] = players[i];
             }

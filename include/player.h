@@ -109,3 +109,12 @@ class player{
         };
         
 };
+
+bool noPlayersAboveMax(player* players[8], int numPlayers, int maxPoints){
+    for (int i = 0; i < numPlayers; i++){
+        if (players[i]->getPoints() > maxPoints){
+            return false;
+        }
+    }
+    return true;
+}
