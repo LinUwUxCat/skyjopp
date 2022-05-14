@@ -19,7 +19,7 @@ int main(){ //half of this will disappear lol
         printf("Enter the name of player %d: ", i+1);
         char name[20]; //maybe this is too short?
         scanf("%s", name);
-        players[i] = new player(name, mySet);
+        players.push_back(new player(name, mySet));
     //    std::cout << i << players[i]->getName() << std::endl;
     }
     
