@@ -10,9 +10,9 @@ class player{
         int points = 0;
     
     public:
-        player(char* name, cardSet set){ //do i really need to pass the set? //this will be moved later
+        player(char* name){ //do i really need to pass the set? //this will be moved later
             strcpy(this->name, name);
-            int offset = 0;
+            /*int offset = 0;
             for (int i = 0; i < 12; i++){
                 if (set.getCard(i+offset)->getValue() != -3){
                     table[i].setValue(set.getCard(i+offset)->getValue());
@@ -21,7 +21,7 @@ class player{
                     i--;
                     offset++;
                 }
-            }
+            }*/
         };
         void setName(char* name){
             strcpy(this->name, name);

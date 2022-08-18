@@ -5,21 +5,18 @@ class game{
     private:
         std::vector<player*> players; //The official rules say 2 to 8 players.
         //it's better to use a vector here, because the number of players can change.
-        cardSet set;
+        cardSet set = cardSet();
         int numPlayers;
         //card discard = card(-3); //discard is now in the cardSet class
 
     public:
-        game(std::vector<player*> players, cardSet mySet){
-            for (int i = 0; i < 150; i++){
-                this->set.getCard(i)->setValue(mySet.getCard(i)->getValue());
-            }
+        game(std::vector<player*> players){
+            //do not create the set here, since we do it each game start.
             this->numPlayers = players.size();
             this->players = players;
             //card setup
-            this->set.getDiscard()->setValue(this->set.topCard()->getValue()); //set the discard card to the top card.
-            this->set.getDiscard()->flip();
-            this->set.topCard()->setValue(-3);
+            
+            this->set.topCard().setValue(-3);
 
             //shuffle is already done hopefully. I should probably make a class for the set. there is a shuffle function in the main.cpp
             
@@ -27,6 +24,25 @@ class game{
             //already done, will move tho
 
             //choose 2 initial cards to flip
+            
+
+        };
+
+        void start(){
+            int lastPlayer = -1;
+            bool doublePoints = false;
+            set.createAndRandomize(); //create and randomize set
+                                      //now we can deal cards
+            int cp = 0; //current player
+            for (int i = 0; i < numPlayers*12; i++){
+                players[cp]->setCard(i%12, set.getCard(i).getValue());
+                if (i%12 == 11){
+                    cp++;
+                }
+            }
+            //discard
+            this->set.getDiscard()->setValue(this->set.topCard().getValue()); //set the discard card to the top card.
+            this->set.getDiscard()->flip();
             for (int i = 0; i < numPlayers; i++){
                 //std::cout << i << players[i]->getName() << std::endl;
                 printf("%s, Choose 2 cards to flip:\n>> ", players[i]->getName());
@@ -36,13 +52,6 @@ class game{
                 players[i]->getCard(card2)->flip();
             }
             std::cout << *this << std::endl;
-
-        };
-
-        void start(){
-            int lastPlayer = -1;
-            bool doublePoints = false;
-
             while (1){ //i hate doing this but oh well
                 for (int i=0; i<numPlayers; i++){
                     if (lastPlayer == i){
@@ -60,7 +69,7 @@ class game{
                     if (action == 1){ //yes i know i'm not doing this in the right order
                         int cnum = -1;
                         while (cnum < 0 || cnum > 11){
-                            printf("With what card do you want to swap the %d you just took?\n>> ", set.getDiscard()->getValue());
+                            printf("With what card do you want to swap the %s%d\033[0m you just took?\n>> ",set.getDiscard()->getColor(), set.getDiscard()->getValue());
                             scanf("%d", &cnum);
                             if (cnum < 0 || cnum > 11){ printf("Invalid Number! Please retry.\n>> "); }
                         }
@@ -69,33 +78,33 @@ class game{
                         players[i]->getCard(cnum)->flip();
                         set.getDiscard()->setValue(action);
                     } else {
-                        printf("You picked a %d!\nWhat will you do with it?\n0:Swap it with one of your cards\n1:Discard it\n>> ", this->set.topCard()->getValue());
+                        printf("You picked a %s%d!\nWhat will you do with it?\n0:Swap it with one of your cards\n1:Discard it\n>> ", this->set.topCard().getColor(), this->set.topCard().getValue());
                         scanf("%d", &action);
                         if (action == 0){ //this code sucks, it's repetitive
                             int cnum = -1;
                             while (cnum < 0 || cnum > 11){
                                 printf("With what card do you want to swap the ");
-                                printf(set.topCard()->getColor());
-                                printf("%d\033[0m you just took?\n>> ", set.topCard()->getValue());
+                                printf(set.topCard().getColor());
+                                printf("%d\033[0m you just took?\n>> ", set.topCard().getValue());
                                 scanf("%d", &cnum);
                                 if (cnum < 0 || cnum > 11){ printf("Invalid Number! Please retry.\n>> "); }
                             }
 
                             set.getDiscard()->setValue(players[i]->getCard(cnum)->getValue());
-                            players[i]->getCard(cnum)->setValue(set.topCard()->getValue());
+                            players[i]->getCard(cnum)->setValue(set.topCard().getValue());
                             players[i]->getCard(cnum)->flip();
-                            set.topCard()->setValue(-3);
+                            set.topCard().setValue(-3);
 
                         } else {
                             int cnum = -1;
                             while (cnum < 0 || cnum > 11){
-                                printf("You discarded the %d. Which card do you want to flip now?\n>> ", set.topCard()->getValue());
+                                printf("You discarded the %d. Which card do you want to flip now?\n>> ", set.topCard().getValue());
                                 scanf("%d", &cnum);
                                 if (cnum < 0 || cnum > 11){ printf("Invalid Number! Please retry.\n>> "); } else if (players[i]->getCard(cnum)->getFacing()) { printf("You can't flip a card that's already flipped!\n"); cnum = -1;}
                             }
                             players[i]->getCard(cnum)->flip();
-                            set.getDiscard()->setValue(set.topCard()->getValue());
-                            set.topCard()->setValue(-3);
+                            set.getDiscard()->setValue(set.topCard().getValue());
+                            set.topCard().setValue(-3);
                         }
                     }
                     players[i]->checkColumn();

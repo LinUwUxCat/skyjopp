@@ -4,48 +4,52 @@
 
 class cardSet{
     private:
-        card* list[150];
+        card list[150];
         card discard = card(-3);
     
     public:
         cardSet(){
-            //create a set of cards. 
+            //empty for now    
+        };
+
+        void createAndRandomize(){
+            //create, then randomize the set of cards.
             //the set has 10 cards of each value from -2 to 12, except -2 which has 5 cards and 0 which has 15.
             for (int i=0;i<140;i+=14){ //10 cards of each, except -2
-                list[i] = new card(-1);
-                list[i+1] = new card(0);
-                list[i+2] = new card(1);
-                list[i+3] = new card(2);
-                list[i+4] = new card(3);
-                list[i+5] = new card(4);
-                list[i+6] = new card(5);
-                list[i+7] = new card(6);
-                list[i+8] = new card(7);
-                list[i+9] = new card(8);
-                list[i+10] = new card(9);
-                list[i+11] = new card(10);
-                list[i+12] = new card(11);
-                list[i+13] = new card(12);
+                list[i].setValue(-1);
+                list[i+1].setValue(0);
+                list[i+2].setValue(1);
+                list[i+3].setValue(2);
+                list[i+4].setValue(3);
+                list[i+5].setValue(4);
+                list[i+6].setValue(5);
+                list[i+7].setValue(6);
+                list[i+8].setValue(7);
+                list[i+9].setValue(8);
+                list[i+10].setValue(9);
+                list[i+11].setValue(10);
+                list[i+12].setValue(11);
+                list[i+13].setValue(12);
             }
             for (int i = 0; i < 10; i+=2){ //5 cards of -2 and 5 additional cards of 0
-                list[140+i] = new card(0);
-                list[140+i+1] = new card(-2);
+                list[140+i].setValue(0);
+                list[140+i+1].setValue(-2);
             }
             std::random_device rd;
             std::mt19937 g(rd());
             std::shuffle(&list[0], &list[150], g); //shuffle the set
-        };
+        }
 
-        card *topCard(){
+        card topCard(){
             for (int i = 0; i < 150; i++){
-                if (list[i]->getValue() != -3){
+                if (list[i].getValue() != -3){
                     return list[i];
                 }
             }
-            exit(EXIT_FAILURE);
+            //exit(EXIT_FAILURE);
         }
 
-        card *getCard(int index){
+        card getCard(int index){
             return list[index];
         }
 

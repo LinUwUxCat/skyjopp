@@ -5,6 +5,11 @@ class card{
         bool facing; //true if up, false if down. when in stack, false.
 
     public:
+        card(){
+            this->value = -3;
+            this->enabled = true;
+            this->facing = false;
+        }
         card(int value){
             this->value = value;
             this->enabled = true;
