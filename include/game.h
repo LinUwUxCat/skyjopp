@@ -16,7 +16,7 @@ class game{
             this->players = players;
             //card setup
             
-            this->set.topCard().setValue(-3);
+            
 
             //shuffle is already done hopefully. I should probably make a class for the set. there is a shuffle function in the main.cpp
             
@@ -43,11 +43,22 @@ class game{
             //discard
             this->set.getDiscard()->setValue(this->set.topCard().getValue()); //set the discard card to the top card.
             this->set.getDiscard()->flip();
+            this->set.topCard().setValue(-3);
             for (int i = 0; i < numPlayers; i++){
                 //std::cout << i << players[i]->getName() << std::endl;
                 printf("%s, Choose 2 cards to flip:\n>> ", players[i]->getName());
                 int card1, card2;
-                scanf("%d %d", &card1, &card2);
+                int c;
+                while (scanf("%d %d", &card1, &card2) != 2){
+                    printf("Invalid input! Please try again\n>> ");
+                    while((c = getchar()) != '\n' && c != EOF);
+                }
+                if (card1 > 11){
+                    card1 = 11;
+                }
+                if (card2 > 11){
+                    card2 = 11;
+                }
                 players[i]->getCard(card1)->flip();
                 players[i]->getCard(card2)->flip();
             }
@@ -65,7 +76,11 @@ class game{
                     printf("It's %s's turn!", players[i]->getName());
                     printf("What do you want to do?\n0:Take a card from the stack\n1:Take the discarded card\n>> ");
                     int action = 0;
-                    scanf("%d", &action);
+                    int c;
+                    while (scanf("%d", &action) != 1){
+                        printf("Invalid input! Please try again\n>> ");
+                        while((c = getchar()) != '\n' && c != EOF);
+                    }
                     if (action == 1){ //yes i know i'm not doing this in the right order
                         int cnum = -1;
                         while (cnum < 0 || cnum > 11){
@@ -78,15 +93,23 @@ class game{
                         players[i]->getCard(cnum)->flip();
                         set.getDiscard()->setValue(action);
                     } else {
-                        printf("You picked a %s%d!\nWhat will you do with it?\n0:Swap it with one of your cards\n1:Discard it\n>> ", this->set.topCard().getColor(), this->set.topCard().getValue());
-                        scanf("%d", &action);
+                        printf("You picked a %s%d\033[0m!\nWhat will you do with it?\n0:Swap it with one of your cards\n1:Discard it\n>> ", this->set.topCard().getColor(), this->set.topCard().getValue());
+                        int c;
+                        while (scanf("%d", &action) != 1){
+                            printf("Invalid input! Please try again\n>> ");
+                            while((c = getchar()) != '\n' && c != EOF);
+                        }
                         if (action == 0){ //this code sucks, it's repetitive
                             int cnum = -1;
                             while (cnum < 0 || cnum > 11){
                                 printf("With what card do you want to swap the ");
                                 printf(set.topCard().getColor());
                                 printf("%d\033[0m you just took?\n>> ", set.topCard().getValue());
-                                scanf("%d", &cnum);
+                                int c;
+                                while (scanf("%d", &cnum) != 1){
+                                    printf("Invalid input! Please try again\n>> ");
+                                    while((c = getchar()) != '\n' && c != EOF);
+                                }
                                 if (cnum < 0 || cnum > 11){ printf("Invalid Number! Please retry.\n>> "); }
                             }
 
@@ -99,12 +122,19 @@ class game{
                             int cnum = -1;
                             while (cnum < 0 || cnum > 11){
                                 printf("You discarded the %d. Which card do you want to flip now?\n>> ", set.topCard().getValue());
-                                scanf("%d", &cnum);
+                                int c;
+                                while (scanf("%d", &cnum) != 1){
+                                    printf("Invalid input! Please try again\n>> ");
+                                    while((c = getchar()) != '\n' && c != EOF);
+                                }
                                 if (cnum < 0 || cnum > 11){ printf("Invalid Number! Please retry.\n>> "); } else if (players[i]->getCard(cnum)->getFacing()) { printf("You can't flip a card that's already flipped!\n"); cnum = -1;}
                             }
                             players[i]->getCard(cnum)->flip();
                             set.getDiscard()->setValue(set.topCard().getValue());
+                            printf("Before : %d", set.topCard().getValue());
                             set.topCard().setValue(-3);
+                            printf("After : %d", set.topCard().getValue());
+
                         }
                     }
                     players[i]->checkColumn();

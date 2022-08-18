@@ -100,8 +100,11 @@ class player{
                 } else {
                     out << myPlayer.getCard(i)->getColor() << spacefill((char*)std::to_string(myPlayer.getCard(i)->getValue()).c_str(), 3) << " \033[0m"; //only 2 is necessary but 3 looks better
                 }
-                if (i == 3 || i == 7){
-                    out << "\n";
+                if (i == 3){
+                    out << "\tTotal : " << myPlayer.getTotal() << "\n";
+                }
+                if (i == 7){
+                    out << "\tPoints : " << myPlayer.getPoints() << "\n";
                 }
             }
             out << std::endl;

@@ -14,21 +14,15 @@ int main(){ //half of this will disappear lol
        return 1;
     }
     std::vector<player*> players;
-    printf("WHAT");
     for (int i = 0; i < numPlayers; i++){
-        printf("WHAT");
         printf("Enter the name of player %d: ", i+1);
         char name[20]; //maybe this is too short?
         scanf("%s", name);
-        printf("WHAT");
         players.push_back(new player(name));
-        printf("WHATf");
     //    std::cout << i << players[i]->getName() << std::endl;
     }
     
-    printf("WHATf");
     game g = game(players);
-    printf("WHAT");
     while ( noPlayersAboveMax(players, 100) ){ //the official rules say that the game ends when 1 player has 100 points.
         g.start();
         for (int i = 0; i < numPlayers; i++){

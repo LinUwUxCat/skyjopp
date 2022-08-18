@@ -40,13 +40,13 @@ class cardSet{
             std::shuffle(&list[0], &list[150], g); //shuffle the set
         }
 
-        card topCard(){
+        card &topCard(){
             for (int i = 0; i < 150; i++){
                 if (list[i].getValue() != -3){
                     return list[i];
                 }
             }
-            //exit(EXIT_FAILURE);
+            exit(EXIT_FAILURE);
         }
 
         card getCard(int index){
@@ -60,4 +60,5 @@ class cardSet{
         card *getDiscard(){
             return &discard;
         }
+
 };
