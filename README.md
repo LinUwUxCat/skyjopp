@@ -1,4 +1,9 @@
 # Skyjo++
 ![](https://i.imgur.com/5N0O3ws.png)
 ## TODO
-- Make the set a part of the game, or it's own class
+- Edit comments
+- Make a points recap screen
+- winscreen maybe
+
+## Building
+`g++ src/main.cpp -I include/ -o skyjo`
