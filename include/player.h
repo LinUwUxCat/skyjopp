@@ -49,7 +49,7 @@ class player{
         int getTotal(){
             int total = 0;
             for (int i = 0; i < 12; i++){
-                if (table[i].getFacing()){
+                if (table[i].getFacing() && table[i].getEnabled()){
                     total += table[i].getValue();
                 }
             }
