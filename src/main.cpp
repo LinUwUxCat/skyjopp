@@ -26,7 +26,7 @@ int main(){ //half of this will disappear lol
     while ( noPlayersAboveMax(players, 100) ){ //the official rules say that the game ends when 1 player has 100 points.
         g.start();
         for (int i = 0; i < numPlayers; i++){
-            std::cout << players[i]->getName() << "has" << players[i]->getPoints() << "points." << std::endl;
+            std::cout << players[i]->getName() << " now has " << players[i]->getPoints() << " points." << std::endl;
         }
     }
     return 0;
