@@ -131,9 +131,7 @@ class game{
                             }
                             players[i]->getCard(cnum)->flip();
                             set.getDiscard()->setValue(set.topCard().getValue());
-                            printf("Before : %d", set.topCard().getValue());
                             set.topCard().setValue(-3);
-                            printf("After : %d", set.topCard().getValue());
 
                         }
                     }
