@@ -142,8 +142,8 @@ class game{
                         lastPlayer = i;
                         printf("%s has started the last round!\n", players[i]->getName());
                     }
-                    if (lastPlayer != -1 && i != lastPlayer){
-                        if (players[lastPlayer]->getTotal() > players[i]->getTotal() && !doublePoints){
+                    if (lastPlayer != -1){
+                        if (i != lastPlayer && players[lastPlayer]->getTotal() > players[i]->getTotal() && !doublePoints){
                             doublePoints = true;
                         }
                         players[i]->addPoints(players[i]->getTotal());
