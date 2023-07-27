@@ -8,6 +8,17 @@ class cardSet{
         std::vector<card> list;
         std::vector<card> discard;
         
+        void redistribute(){ 
+            if (list.size()>0)return;
+            if (discard.size()<=0)return;
+            for (int i = discard.size()-1; i>=0;i--){
+                list.push_back(discard[i]);
+                discard.pop_back();
+            }
+            std::random_device rd;
+            std::mt19937 g(rd());
+            std::shuffle(list.begin(), list.end(), g);
+        }
     public:
         cardSet(){
             //empty for now    
@@ -40,10 +51,11 @@ class cardSet{
             std::mt19937 g(rd());
             std::shuffle(list.begin(), list.end(), g); //shuffle the set
         }
+
 //TODO: Implement a current_card in game or whatever, and don't set anything to -3. Put everything in a discard vector that will end up being reused when out of cards
         card &topCard(){
-            if (list.size()>0) return list[list.size()-1];
-            else exit(EXIT_FAILURE);
+            if (list.size()<=0) redistribute();
+            return list[list.size()-1];
         }
 
         card getCard(int index){
@@ -51,7 +63,7 @@ class cardSet{
         }
 
         card takeTop(){
-            if (list.size()<=0) exit(EXIT_FAILURE);
+            if (list.size()<=0) redistribute();
             card temp = list[list.size()-1];
             list.pop_back();
             return temp;
@@ -85,5 +97,6 @@ class cardSet{
             discard[discard.size()-1] = *c;
             return temp;
         }
+
 
 };
