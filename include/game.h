@@ -1,4 +1,5 @@
 #include "player.h"
+#include "cardSet.h"
 #include <vector>
 
 class game{
@@ -7,25 +8,12 @@ class game{
         //it's better to use a vector here, because the number of players can change.
         cardSet set = cardSet();
         int numPlayers;
-        //card discard = card(-3); //discard is now in the cardSet class
 
     public:
         game(std::vector<player*> players){
             //do not create the set here, since we do it each game start.
             this->numPlayers = players.size();
             this->players = players;
-            //card setup
-            
-            
-
-            //shuffle is already done hopefully. I should probably make a class for the set. there is a shuffle function in the main.cpp
-            
-            //deal
-            //already done, will move tho
-
-            //choose 2 initial cards to flip
-            
-
         };
 
         void start(){
@@ -41,9 +29,9 @@ class game{
                 }
             }
             //discard
-            this->set.getDiscard()->setValue(this->set.topCard().getValue()); //set the discard card to the top card.
-            this->set.getDiscard()->flip();
-            this->set.topCard().setValue(-3);
+            
+            this->set.discardCard(this->set.takeTop());
+            
             for (int i = 0; i < numPlayers; i++){
                 //std::cout << i << players[i]->getName() << std::endl;
                 printf("%s, Choose 2 cards to flip:\n>> ", players[i]->getName());
@@ -88,10 +76,8 @@ class game{
                             scanf("%d", &cnum);
                             if (cnum < 0 || cnum > 11){ printf("Invalid Number! Please retry.\n>> "); }
                         }
-                        action = players[i]->getCard(cnum)->getValue(); //hehe we already have an int variable, no need to create one more placeholder
-                        players[i]->getCard(cnum)->setValue(set.getDiscard()->getValue());
-                        players[i]->getCard(cnum)->flip();
-                        set.getDiscard()->setValue(action);
+
+                        players[i]->setCard(cnum, set.swapDiscard(players[i]->getCard(cnum)));
                     } else {
                         printf("You picked a %s%d\033[0m!\nWhat will you do with it?\n0:Swap it with one of your cards\n1:Discard it\n>> ", this->set.topCard().getColor(), this->set.topCard().getValue());
                         int c;
@@ -113,10 +99,9 @@ class game{
                                 if (cnum < 0 || cnum > 11){ printf("Invalid Number! Please retry.\n>> "); }
                             }
 
-                            set.getDiscard()->setValue(players[i]->getCard(cnum)->getValue());
-                            players[i]->getCard(cnum)->setValue(set.topCard().getValue());
+                            set.discardCard(players[i]->getCard(cnum));
+                            players[i]->setCard(cnum, set.takeTop());
                             players[i]->getCard(cnum)->flip();
-                            set.topCard().setValue(-3);
 
                         } else {
                             int cnum = -1;
@@ -130,8 +115,7 @@ class game{
                                 if (cnum < 0 || cnum > 11){ printf("Invalid Number! Please retry.\n>> "); } else if (players[i]->getCard(cnum)->getFacing()) { printf("You can't flip a card that's already flipped!\n"); cnum = -1;}
                             }
                             players[i]->getCard(cnum)->flip();
-                            set.getDiscard()->setValue(set.topCard().getValue());
-                            set.topCard().setValue(-3);
+                            set.discardCard(set.takeTop());
 
                         }
                     }

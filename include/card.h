@@ -1,3 +1,5 @@
+#ifndef _SKYJO_CARD_H
+#define _SKYJO_CARD_H
 class card{
     private:
         bool enabled; //does the card count towards the player's score. This only works if the card is in a player's hand.
@@ -16,8 +18,7 @@ class card{
             this->facing = false;
         };
         bool flip(){
-            facing = true;
-            return facing;
+            return facing = true;
         }
         void disable(){
             enabled = false;
@@ -40,3 +41,4 @@ class card{
             }
         }
 };
+#endif //_SKYJO_CARD_H

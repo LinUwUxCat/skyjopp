@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "cardSet.h"
+#include "card.h"
 #include "utils.h"
 
 class player{
