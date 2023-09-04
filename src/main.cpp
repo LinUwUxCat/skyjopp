@@ -1,8 +1,12 @@
 #include <iostream>
 #include <vector>
 #include "game.h" //includes the game, which also includes player which also includes card and spacefill.
+#include "render.hpp"
 
 int main(){ //half of this will disappear lol
+
+    Renderer R = Renderer();
+
     int numPlayers; //actually let's create players here
     printf("Enter the number of players: ");
     scanf("%d", &numPlayers);
